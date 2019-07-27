@@ -11,7 +11,7 @@ git clone https://github.com/yannhowe/pivnet-downloader
 2) Log in to your [pivotal profile](https://network.pivotal.io/users/dashboard/edit-profile) and generate your UAA API KEY if you don't already have one and add the UAA API KEY to the .env file
 ```
 cd pivnet-downloader
-pipenv run python pipenv-downloader.py
+pipenv run python pivnet-downloader.py
 ```
 You will see a product list similar to the following
 ```
@@ -25,7 +25,9 @@ products=[
     'pivotal-container-service',
     ]
 ```
+> Remember you need to accept the EULA on the website before you are allowed to download using the API!
+
 Run again to download files into `./product-files/`
 ```
-pipenv run python pipenv-downloader.py
+pipenv run python pivnet-downloader.py
 ```
