@@ -2,6 +2,13 @@
 
 A python thing to get all your [Pivotal Network](https://network.pivotal.io/) stuff so you don't have to.
 
+Currently gets
+- stemcells-ubuntu-xenial 250.x
+- Products added to the `products` list
+
+Skips any files with the text
+- ["light-bosh-stemcell-", "azure", "openstack", "vcloud", ".txt", "for GCP", "for Openstack", "for AWS", "for Azure"]
+
 # Quickstart
 Clone this repository
 ```
@@ -23,6 +30,7 @@ For example:
 products=[
     'p-bosh-backup-and-restore',
     'pivotal-container-service',
+    'ops-manager',
     ]
 ```
 > Remember you need to accept the EULA on the website before you are allowed to download using the API!
