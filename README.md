@@ -7,15 +7,24 @@ Currently gets
 - Products added to the `products` list
 
 Skips any files with the text
-- ["light-bosh-stemcell-", "azure", "openstack", "vcloud", ".txt", "for GCP", "for Openstack", "for AWS", "for Azure"]
+- ["light-bosh-stemcell-", "azure", "openstack", "vcloud", ".txt", "for GCP", "for Openstack", "for AWS", "for Azure", "-aws-", "-gcp-"]
 
 # Quickstart
 Clone this repository
 ```
 git clone https://github.com/yannhowe/pivnet-downloader
 ```
-1) Make sure you have the amazing [Pipenv](https://docs.pipenv.org/en/latest/). If not, `brew install pipenv` or `pip install --user pipenv`.
-2) Log in to your [pivotal profile](https://network.pivotal.io/users/dashboard/edit-profile) and generate your UAA API KEY if you don't already have one and add the UAA API KEY to the .env file
+Make sure you have the amazing [Pipenv](https://docs.pipenv.org/en/latest/). If not, 
+
+```
+brew install pipenv
+``` 
+or 
+```
+pip install --user pipenv
+```
+
+Log in to your [pivotal profile](https://network.pivotal.io/users/dashboard/edit-profile) and generate your UAA API KEY if you don't already have one and add the UAA API KEY to the .env file
 ```
 cd pivnet-downloader
 pipenv run python pivnet-downloader.py
