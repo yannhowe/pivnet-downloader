@@ -1,11 +1,14 @@
 import os
 import re
 import sys
+from pathlib import Path
 import requests
 from nested_lookup import nested_lookup
 
 # Add slugs from product list here: https://network.pivotal.io/api/v2/products/
 # Remember to accept the EULA from the webpage first
+dryrun=True
+
 products=[
     'p-bosh-backup-and-restore',
     'pivotal-container-service',
@@ -25,6 +28,7 @@ if not response:
 
 # Available product slugs
 product_slugs = nested_lookup('slug', requests.get('https://network.pivotal.io/api/v2/products/').json())
+print("available products:")
 print(product_slugs)
 
 # Get products
@@ -51,7 +55,9 @@ for product_url in product_urls:
 
     for product_file in r.json()['product_files']:
         if any(exclusions in product_file['aws_object_key'] for exclusions in exclude_these_strings):
-            print("skipping %s" % product_file['aws_object_key'])
+            print("excluding %s" % product_file['aws_object_key'])
+        elif Path(product_file['aws_object_key']).is_file(): # Check if file already exists
+            print("already downloaded %s" % product_file['aws_object_key'])
         else:
             directory = os.path.dirname(product_file['aws_object_key']) # Use the aws object key as path
             try:
@@ -59,5 +65,9 @@ for product_url in product_urls:
             except FileExistsError:
                 # directory already exists
                 pass
-            r_downloadfile = requests.get(product_file['_links']['download']['href'], headers=headers) # make get request
-            open(product_file['aws_object_key'], 'wb').write(r_downloadfile.content) # write to file
+            if not dryrun:
+                print("downloading %s" % product_file['aws_object_key'])
+                r_downloadfile = requests.get(product_file['_links']['download']['href'], headers=headers) # make get request
+                open(product_file['aws_object_key'], 'wb').write(r_downloadfile.content) # write to file
+            else:
+                print("dryrun - downloading %s" % product_file['aws_object_key'])
