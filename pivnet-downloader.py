@@ -33,12 +33,18 @@ print(product_slugs)
 
 # Get products
 product_urls=[]
+stemcell_urls=[]
 
-# Get stemcells-ubuntu-xenial
+# Get stemcells-ubuntu-xenial 250.*
 stemcells_ubuntu_xenial_release_list = requests.get("https://network.pivotal.io/api/v2/products/stemcells-ubuntu-xenial/releases", allow_redirects=True).json()
 for release in stemcells_ubuntu_xenial_release_list["releases"]:
     if "250" in release["version"]:
-        product_urls.append(release["_links"]["product_files"]["href"])
+        stemcell_urls.append(release["_links"]["product_files"]["href"])
+
+try:
+    product_urls.append(stemcell_urls[0])
+except IndexError:
+    print("IndexError: empty list %s" % "stemcell_urls")
 
 # Get other products
 for product in products:
